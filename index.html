@@ -44,15 +44,15 @@
         }
     </style>
 </head>
-<body class="bg-gray-100 h-screen flex flex-col md:flex-row overflow-hidden text-gray-800">
+<body class="bg-gray-100 h-[100dvh] flex flex-col md:flex-row overflow-hidden text-gray-800">
 
     <!-- Sidebar Controls -->
-    <aside class="w-full md:w-96 bg-white flex flex-col h-[55vh] md:h-full shadow-2xl z-20 overflow-y-auto shrink-0 border-b md:border-r border-gray-200">
-        <div class="p-4 md:p-5 border-b border-gray-100">
-            <h1 class="text-xl font-black text-gray-900 tracking-tight">お釣りガチャ<br class="hidden md:block">ジェネレーター</h1>
+    <aside class="w-full md:w-96 bg-white flex flex-col h-[52%] md:h-full shadow-2xl z-20 overflow-y-auto shrink-0 border-b md:border-r border-gray-200">
+        <div class="p-3 md:p-5 border-b border-gray-100 flex justify-between items-center">
+            <h1 class="text-lg md:text-xl font-black text-gray-900 tracking-tight">お釣りガチャ<br class="hidden md:block">ジェネレーター</h1>
         </div>
 
-        <div class="p-4 md:p-5 flex-1 flex flex-col gap-6">
+        <div class="p-3 md:p-5 flex-1 flex flex-col gap-4 md:gap-6">
             
             <!-- Step 1: Upload -->
             <div>
@@ -60,22 +60,22 @@
                     <span class="bg-blue-600 text-white w-5 h-5 rounded-full flex items-center justify-center mr-2 text-xs">1</span>
                     背景画像
                 </label>
-                <input type="file" id="imageInput" accept="image/*" class="block w-full text-sm text-gray-500 file:mr-3 file:py-2.5 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-bold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 cursor-pointer">
+                <input type="file" id="imageInput" accept="image/*" class="block w-full text-sm text-gray-500 file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-bold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 cursor-pointer">
             </div>
 
             <!-- Step 2: Edit Label Form -->
-            <div id="editSection" class="bg-gray-50 p-4 rounded-xl border border-gray-200 shadow-sm">
-                <h2 class="text-sm font-bold mb-3 flex items-center text-gray-800">
+            <div id="editSection" class="bg-gray-50 p-3 md:p-4 rounded-xl border border-gray-200 shadow-sm">
+                <h2 class="text-sm font-bold mb-2 md:mb-3 flex items-center text-gray-800">
                     <span class="bg-blue-600 text-white w-5 h-5 rounded-full flex items-center justify-center mr-2 text-xs">2</span>
                     ラベル追加
                 </h2>
                 
-                <div class="space-y-3">
+                <div class="space-y-2.5 md:space-y-3">
                     <!-- 貨幣基本情報 -->
                     <div class="flex gap-2">
                         <div class="flex-1">
                             <label class="block text-xs font-bold text-gray-600 mb-1">元号</label>
-                            <select id="labelEra" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none bg-white">
+                            <select id="labelEra" class="w-full px-2.5 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none bg-white">
                                 <option value="昭和">昭和</option>
                                 <option value="平成">平成</option>
                                 <option value="令和" selected>令和</option>
@@ -83,11 +83,11 @@
                         </div>
                         <div class="flex-1">
                             <label class="block text-xs font-bold text-gray-600 mb-1">年</label>
-                            <input type="text" id="labelYearNum" placeholder="例: 3" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none">
+                            <input type="text" id="labelYearNum" placeholder="例: 3" class="w-full px-2.5 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none">
                         </div>
                         <div class="flex-1">
                             <label class="block text-xs font-bold text-gray-600 mb-1">額面</label>
-                            <select id="labelDenomination" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none bg-white">
+                            <select id="labelDenomination" class="w-full px-2.5 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none bg-white">
                                 <option value="1">1円</option>
                                 <option value="5">5円</option>
                                 <option value="10">10円</option>
@@ -111,7 +111,7 @@
                     <div class="flex gap-2 pt-1 border-t border-gray-200 mt-2">
                         <div class="w-1/3">
                             <label class="block text-xs font-bold text-gray-600 mb-1">レア度</label>
-                            <select id="labelRarity" disabled class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm font-bold bg-gray-100 text-gray-700">
+                            <select id="labelRarity" disabled class="w-full px-2.5 py-2 border border-gray-300 rounded-lg text-sm font-bold bg-gray-100 text-gray-700">
                                 <option value="N">N</option>
                                 <option value="R">R</option>
                                 <option value="SR">SR</option>
@@ -120,12 +120,12 @@
                         </div>
                         <div class="flex-1">
                             <label class="block text-xs font-bold text-gray-600 mb-1">確率 (%)</label>
-                            <input type="text" id="labelProb" placeholder="年・額面を選択すると自動入力" readonly class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm bg-gray-100 text-gray-700">
+                            <input type="text" id="labelProb" placeholder="年・額面を選択すると自動入力" readonly class="w-full px-2.5 py-2 border border-gray-300 rounded-lg text-sm bg-gray-100 text-gray-700">
                         </div>
                     </div>
 
                     <!-- 文字サイズ -->
-                    <div class="pt-2">
+                    <div class="pt-1">
                         <div class="flex justify-between items-center mb-1">
                             <label class="block text-xs font-bold text-gray-600">文字サイズ</label>
                             <span id="fontSizeDisplay" class="text-xs font-mono bg-gray-200 px-2 py-0.5 rounded">30</span>
@@ -133,52 +133,57 @@
                         <input type="range" id="labelFontSize" min="20" max="60" value="30" class="w-full">
                     </div>
 
-                    <button id="addLabelBtn" class="w-full mt-2 bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg text-sm font-bold shadow-md transition-transform active:scale-95 flex items-center justify-center gap-2">
+                    <button id="addLabelBtn" class="w-full mt-1 bg-blue-600 hover:bg-blue-700 text-white py-2.5 md:py-3 rounded-lg text-sm font-bold shadow-md transition-transform active:scale-95 flex items-center justify-center gap-2">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                             <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
                         </svg>
                         キャンバスに追加
                     </button>
-                    <p class="text-[10px] text-center text-gray-500 mt-1">追加後はドラッグで移動、ダブルタップで削除</p>
+                    <p class="text-[10px] text-center text-gray-500">ラベル：ドラッグ移動 / ダブルタップ削除<br>画像：2本指ピンチで拡大縮小 / ドラッグ移動</p>
                 </div>
             </div>
 
         </div>
 
         <!-- Export -->
-        <div class="p-4 bg-white border-t border-gray-200 mt-auto shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] relative z-10 flex flex-col gap-2.5">
-            <button id="downloadBtn" class="w-full bg-gray-900 hover:bg-black text-white py-3 rounded-xl font-bold shadow-lg transition-transform active:scale-95 flex justify-center items-center gap-2 text-sm">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+        <div class="p-3 md:p-4 bg-white border-t border-gray-200 mt-auto shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] relative z-10 flex flex-row md:flex-col gap-2">
+            <button id="downloadBtn" class="flex-1 bg-gray-900 hover:bg-black text-white py-2.5 md:py-3 rounded-xl font-bold shadow-lg transition-transform active:scale-95 flex justify-center items-center gap-1.5 text-xs md:text-sm">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 md:h-5 md:w-5" viewBox="0 0 20 20" fill="currentColor">
                     <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd" />
                 </svg>
-                画像を保存 (JPG)
+                保存 (JPG)
             </button>
 
-            <button id="shareXBtn" class="w-full bg-sky-500 hover:bg-sky-600 text-white py-3 rounded-xl font-bold shadow-lg transition-transform active:scale-95 flex justify-center items-center gap-2 text-sm">
+            <button id="shareXBtn" class="flex-1 bg-sky-500 hover:bg-sky-600 text-white py-2.5 md:py-3 rounded-xl font-bold shadow-lg transition-transform active:scale-95 flex justify-center items-center gap-1.5 text-xs md:text-sm">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
                 </svg>
-                Xに投稿 (#お釣りガチャ)
+                Xに投稿
             </button>
         </div>
     </aside>
 
     <!-- Canvas Area -->
-    <main class="flex-1 relative h-[45vh] md:h-full bg-gray-900" id="canvasWrapper">
+    <main class="flex-1 relative h-[48%] md:h-full bg-gray-900 overflow-hidden select-none" id="canvasWrapper">
         <div id="instructionText" class="absolute inset-0 flex flex-col items-center justify-center text-white pointer-events-none z-0 px-4 text-center">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 md:h-16 md:w-16 mb-4 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 md:h-16 md:w-16 mb-3 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
             </svg>
             <p class="font-bold tracking-wider text-sm md:text-base text-gray-400">画像ファイルを選択してください</p>
         </div>
         
-        <div class="w-full h-full p-2 md:p-6 flex items-center justify-center overflow-hidden relative">
-            <!-- CSSによるスケーリング表示（元解像度を維持） -->
-            <canvas id="mainCanvas" class="max-w-full max-h-full object-contain cursor-crosshair shadow-2xl relative z-10 hidden touch-none"></canvas>
+        <!-- Viewport for Pan & Zoom -->
+        <div id="viewport" class="w-full h-full relative overflow-hidden touch-none cursor-grab active:cursor-grabbing">
+            <canvas id="mainCanvas" class="absolute top-0 left-0 origin-top-left shadow-2xl hidden"></canvas>
         </div>
+
+        <!-- Reset View Button -->
+        <button id="resetViewBtn" class="hidden absolute top-3 right-3 z-30 bg-gray-800/80 hover:bg-gray-900 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg border border-gray-600 backdrop-blur-sm transition active:scale-95">
+            全体表示に戻す
+        </button>
         
         <!-- Toast Notification -->
-        <div id="toast" class="absolute top-4 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white px-6 py-3 rounded-full shadow-2xl text-sm font-bold transition-all duration-300 opacity-0 pointer-events-none z-50 flex items-center gap-2">
+        <div id="toast" class="absolute top-4 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white px-5 py-2.5 rounded-full shadow-2xl text-xs md:text-sm font-bold transition-all duration-300 opacity-0 pointer-events-none z-50 flex items-center gap-2 whitespace-nowrap">
             <span id="toastIcon">ℹ️</span>
             <span id="toastMsg">Message</span>
         </div>
@@ -189,16 +194,36 @@
         let baseImage = null;
         let coinData = [];
         let labels = [];
-        let isDragging = false;
+        
+        // Label dragging state
+        let isDraggingLabel = false;
         let draggingLabelIndex = -1;
         let dragOffsetX = 0;
         let dragOffsetY = 0;
         let lastTapTime = 0;
 
+        // Viewport Pan & Zoom state
+        let viewScale = 1;
+        let viewX = 0;
+        let viewY = 0;
+        let minScale = 0.1;
+        let maxScale = 5.0;
+
+        // Multi-touch / Pointer tracking
+        let activePointers = new Map();
+        let isPanningCanvas = false;
+        let lastPanX = 0;
+        let lastPanY = 0;
+        let initialPinchDistance = 0;
+        let initialPinchScale = 1;
+        let pinchCenterCanvas = { x: 0, y: 0 };
+
         // --- DOM Elements ---
+        const viewport = document.getElementById('viewport');
         const canvas = document.getElementById('mainCanvas');
         const ctx = canvas.getContext('2d');
         const imageInput = document.getElementById('imageInput');
+        const resetViewBtn = document.getElementById('resetViewBtn');
         
         // Form Inputs
         const eraInput = document.getElementById('labelEra');
@@ -223,14 +248,19 @@
             imageInput.addEventListener('change', handleImageUpload);
             downloadBtn.addEventListener('click', downloadImage);
             shareXBtn.addEventListener('click', shareToX);
+            resetViewBtn.addEventListener('click', fitCanvasToViewport);
             
-            // Canvas Interaction (Unified for Mouse & Touch)
-            canvas.addEventListener('pointerdown', handlePointerDown);
-            window.addEventListener('pointermove', handlePointerMove);
-            window.addEventListener('pointerup', handlePointerUp);
-            window.addEventListener('pointercancel', handlePointerUp);
-            // Prevent default touch behaviors (like scrolling) on canvas
-            canvas.addEventListener('touchstart', (e) => e.preventDefault(), { passive: false });
+            // Viewport & Canvas Interaction (Pointer Events for Mouse & Multi-touch)
+            viewport.addEventListener('pointerdown', handlePointerDown);
+            viewport.addEventListener('pointermove', handlePointerMove);
+            viewport.addEventListener('pointerup', handlePointerUp);
+            viewport.addEventListener('pointercancel', handlePointerUp);
+            viewport.addEventListener('wheel', handleWheel, { passive: false });
+
+            // Window resize recalculation
+            window.addEventListener('resize', () => {
+                if (baseImage) fitCanvasToViewport();
+            });
 
             // Form Event Listeners (Sync CSV -> Form)
             const syncFormInputs = () => {
@@ -250,6 +280,41 @@
             addLabelBtn.addEventListener('click', addNewLabelFromForm);
         }
 
+        // --- Viewport Transform & Fitting ---
+        function applyViewportTransform() {
+            canvas.style.transform = `translate(${viewX}px, ${viewY}px) scale(${viewScale})`;
+        }
+
+        function fitCanvasToViewport() {
+            if (!baseImage) return;
+            const rect = viewport.getBoundingClientRect();
+            const padding = 16; // 余白
+            const availW = Math.max(rect.width - padding * 2, 50);
+            const availH = Math.max(rect.height - padding * 2, 50);
+
+            const scaleX = availW / canvas.width;
+            const scaleY = availH / canvas.height;
+            viewScale = Math.min(scaleX, scaleY);
+            minScale = viewScale * 0.5;
+            maxScale = Math.max(viewScale * 6, 3.0);
+
+            // 中央配置
+            viewX = (rect.width - canvas.width * viewScale) / 2;
+            viewY = (rect.height - canvas.height * viewScale) / 2;
+            applyViewportTransform();
+        }
+
+        // 画面(clientX, clientY)座標をCanvas内部ピクセル座標へ変換
+        function clientToCanvasPos(clientX, clientY) {
+            const rect = viewport.getBoundingClientRect();
+            const vx = clientX - rect.left;
+            const vy = clientY - rect.top;
+            return {
+                x: (vx - viewX) / viewScale,
+                y: (vy - viewY) / viewScale
+            };
+        }
+
         // --- Utilities ---
         function showToast(msg, isSuccess = true) {
             toastMsg.textContent = msg;
@@ -260,14 +325,12 @@
             }, 2500);
         }
 
-        // 文字列の正規化（全角数字→半角数字、それ以外を除去）
         function normalizeYear(str) {
             if (!str) return '';
             let s = str.replace(/[０-９]/g, ch => String.fromCharCode(ch.charCodeAt(0) - 0xFEE0));
             return s.replace(/[^0-9]/g, '');
         }
 
-        // CSV行のパース（ダブルクォートやカンマ対応）
         function parseCSVLine(text) {
             const ret = [];
             let inQuote = false;
@@ -293,8 +356,6 @@
         }
 
         // --- Logic & Handlers ---
-        
-        // CSV文字列を解析してcoinDataに設定
         function loadCsvData(csvText) {
             const lines = csvText.trim().split(/\r?\n/);
             coinData = [];
@@ -315,7 +376,6 @@
             }
         }
 
-        // フォーム内の元号/年/額面からCSVデータを検索し、確率とレア度を自動入力
         function autofillFromCSV() {
             if (coinData.length === 0) return;
             
@@ -368,24 +428,16 @@
                     canvas.width = img.width;
                     canvas.height = img.height;
                     canvas.classList.remove('hidden');
+                    resetViewBtn.classList.remove('hidden');
                     document.getElementById('instructionText').style.display = 'none';
                     labels = [];
                     drawCanvas();
+                    // レイアウト確定後に画面へフィット
+                    requestAnimationFrame(() => fitCanvasToViewport());
                 }
                 img.src = event.target.result;
             }
             reader.readAsDataURL(file);
-        }
-
-        // Canvas上の座標計算（CSS縮小表示に対応）
-        function getPointerPos(e) {
-            const rect = canvas.getBoundingClientRect();
-            const scaleX = canvas.width / rect.width;
-            const scaleY = canvas.height / rect.height;
-            return {
-                x: (e.clientX - rect.left) * scaleX,
-                y: (e.clientY - rect.top) * scaleY
-            };
         }
 
         // ラベルの当たり判定
@@ -403,50 +455,154 @@
             };
         }
 
-        function handlePointerDown(e) {
-            if (!baseImage || e.target !== canvas) return;
-            
-            const pos = getPointerPos(e);
-            const now = Date.now();
-            const isDoubleTap = (now - lastTapTime) < 300;
-            lastTapTime = now;
+        function getPinchDistance(p1, p2) {
+            return Math.hypot(p2.clientX - p1.clientX, p2.clientY - p1.clientY);
+        }
 
-            // 後ろから（前面から）ヒットテスト
-            draggingLabelIndex = -1;
-            for (let i = labels.length - 1; i >= 0; i--) {
-                const box = getLabelHitbox(labels[i]);
-                if (pos.x >= box.x && pos.x <= box.x + box.w &&
-                    pos.y >= box.y && pos.y <= box.y + box.h) {
-                    draggingLabelIndex = i;
-                    break;
-                }
+        function getPinchMidpoint(p1, p2) {
+            return {
+                clientX: (p1.clientX + p2.clientX) / 2,
+                clientY: (p1.clientY + p2.clientY) / 2
+            };
+        }
+
+        function handlePointerDown(e) {
+            if (!baseImage) return;
+            viewport.setPointerCapture(e.pointerId);
+            activePointers.set(e.pointerId, e);
+
+            // 2本指タッチになった場合はピンチズーム開始
+            if (activePointers.size === 2) {
+                isDraggingLabel = false;
+                isPanningCanvas = false;
+                const pts = Array.from(activePointers.values());
+                initialPinchDistance = getPinchDistance(pts[0], pts[1]);
+                initialPinchScale = viewScale;
+                const mid = getPinchMidpoint(pts[0], pts[1]);
+                pinchCenterCanvas = clientToCanvasPos(mid.clientX, mid.clientY);
+                return;
             }
 
-            if (draggingLabelIndex !== -1) {
-                if (isDoubleTap) {
-                    // ダブルタップで削除
-                    labels.splice(draggingLabelIndex, 1);
-                    draggingLabelIndex = -1;
-                    drawCanvas();
+            // 1本指 / マウスクリック時
+            if (activePointers.size === 1) {
+                const pos = clientToCanvasPos(e.clientX, e.clientY);
+                const now = Date.now();
+                const isDoubleTap = (now - lastTapTime) < 300;
+                lastTapTime = now;
+
+                // ラベルのヒットテスト（前面から）
+                draggingLabelIndex = -1;
+                for (let i = labels.length - 1; i >= 0; i--) {
+                    const box = getLabelHitbox(labels[i]);
+                    if (pos.x >= box.x && pos.x <= box.x + box.w &&
+                        pos.y >= box.y && pos.y <= box.y + box.h) {
+                        draggingLabelIndex = i;
+                        break;
+                    }
+                }
+
+                if (draggingLabelIndex !== -1) {
+                    if (isDoubleTap) {
+                        // ダブルタップでラベル削除
+                        labels.splice(draggingLabelIndex, 1);
+                        draggingLabelIndex = -1;
+                        drawCanvas();
+                    } else {
+                        // ラベルのドラッグ移動開始
+                        isDraggingLabel = true;
+                        dragOffsetX = pos.x - labels[draggingLabelIndex].x;
+                        dragOffsetY = pos.y - labels[draggingLabelIndex].y;
+                    }
                 } else {
-                    // ドラッグ開始
-                    isDragging = true;
-                    dragOffsetX = pos.x - labels[draggingLabelIndex].x;
-                    dragOffsetY = pos.y - labels[draggingLabelIndex].y;
+                    // ラベル以外を触った場合はキャンバス全体の移動（パン）開始
+                    isPanningCanvas = true;
+                    lastPanX = e.clientX;
+                    lastPanY = e.clientY;
                 }
             }
         }
 
         function handlePointerMove(e) {
-            if (!isDragging || draggingLabelIndex === -1) return;
-            const pos = getPointerPos(e);
-            labels[draggingLabelIndex].x = pos.x - dragOffsetX;
-            labels[draggingLabelIndex].y = pos.y - dragOffsetY;
-            drawCanvas();
+            if (!baseImage || !activePointers.has(e.pointerId)) return;
+            activePointers.set(e.pointerId, e);
+
+            // 2本指ピンチズーム＋移動
+            if (activePointers.size === 2) {
+                const pts = Array.from(activePointers.values());
+                const currentDist = getPinchDistance(pts[0], pts[1]);
+                if (initialPinchDistance > 0) {
+                    const newScale = Math.min(Math.max(initialPinchScale * (currentDist / initialPinchDistance), minScale), maxScale);
+                    const mid = getPinchMidpoint(pts[0], pts[1]);
+                    const rect = viewport.getBoundingClientRect();
+                    const vx = mid.clientX - rect.left;
+                    const vy = mid.clientY - rect.top;
+
+                    viewScale = newScale;
+                    viewX = vx - pinchCenterCanvas.x * viewScale;
+                    viewY = vy - pinchCenterCanvas.y * viewScale;
+                    applyViewportTransform();
+                }
+                return;
+            }
+
+            // 1本指でのラベル移動
+            if (isDraggingLabel && draggingLabelIndex !== -1) {
+                const pos = clientToCanvasPos(e.clientX, e.clientY);
+                labels[draggingLabelIndex].x = pos.x - dragOffsetX;
+                labels[draggingLabelIndex].y = pos.y - dragOffsetY;
+                drawCanvas();
+                return;
+            }
+
+            // 1本指でのキャンバス全体移動
+            if (isPanningCanvas) {
+                const dx = e.clientX - lastPanX;
+                const dy = e.clientY - lastPanY;
+                lastPanX = e.clientX;
+                lastPanY = e.clientY;
+                viewX += dx;
+                viewY += dy;
+                applyViewportTransform();
+            }
         }
 
-        function handlePointerUp() {
-            isDragging = false;
+        function handlePointerUp(e) {
+            activePointers.delete(e.pointerId);
+            if (viewport.hasPointerCapture(e.pointerId)) {
+                viewport.releasePointerCapture(e.pointerId);
+            }
+
+            if (activePointers.size < 2) {
+                initialPinchDistance = 0;
+            }
+            if (activePointers.size === 0) {
+                isDraggingLabel = false;
+                isPanningCanvas = false;
+            } else if (activePointers.size === 1) {
+                // 2本指から1本指に戻ったときはパン基準点を更新
+                const remaining = Array.from(activePointers.values())[0];
+                isPanningCanvas = true;
+                lastPanX = remaining.clientX;
+                lastPanY = remaining.clientY;
+            }
+        }
+
+        // PCマウスホイールでの拡大縮小
+        function handleWheel(e) {
+            if (!baseImage) return;
+            e.preventDefault();
+            const zoomFactor = e.deltaY < 0 ? 1.12 : 0.89;
+            const newScale = Math.min(Math.max(viewScale * zoomFactor, minScale), maxScale);
+            
+            const rect = viewport.getBoundingClientRect();
+            const vx = e.clientX - rect.left;
+            const vy = e.clientY - rect.top;
+            const canvasPos = clientToCanvasPos(e.clientX, e.clientY);
+
+            viewScale = newScale;
+            viewX = vx - canvasPos.x * viewScale;
+            viewY = vy - canvasPos.y * viewScale;
+            applyViewportTransform();
         }
 
         function addNewLabelFromForm() {
@@ -466,9 +622,15 @@
             let pValue = probInput.value.trim();
             if (pValue === '') pValue = '???';
 
+            // 現在画面に見えている領域の中央に追加する
+            const rect = viewport.getBoundingClientRect();
+            const centerPos = clientToCanvasPos(rect.left + rect.width / 2, rect.top + rect.height / 2);
+            const targetX = Math.min(Math.max(centerPos.x, 50), canvas.width - 50);
+            const targetY = Math.min(Math.max(centerPos.y, 50), canvas.height - 50);
+
             const newLabel = {
-                x: canvas.width / 2,
-                y: canvas.height / 2,
+                x: targetX,
+                y: targetY,
                 era: eraInput.value,
                 year: normYear,
                 denomination: denomInput.value,
@@ -485,22 +647,18 @@
         function drawCanvas() {
             if (!baseImage) return;
 
-            // 背景描画
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             ctx.drawImage(baseImage, 0, 0, canvas.width, canvas.height);
 
-            // スケーリングの基準（幅1000px時のフォントサイズを基準に）
             const scaleBase = canvas.width / 1000;
 
             labels.forEach((label) => {
                 ctx.save();
                 
-                // フォントサイズ計算
                 const fontSizeMain = scaleBase * label.fontSize;
                 const fontSizeRarity = fontSizeMain * 1.8;
                 const strokeRatio = 0.2; 
 
-                // レアリティ別スタイル
                 let fillCol = "#ffffff", strokeCol = "#000000", shadowCol = "transparent", sBlur = 0, glowPasses = 1;
 
                 if (label.rarity === 'N') {
@@ -529,7 +687,6 @@
                     glowPasses = 3;
                 }
 
-                // 左揃えにして、全体の幅から中央位置を算出する
                 ctx.textAlign = "left";
                 ctx.textBaseline = "middle";
                 ctx.lineJoin = "round";
@@ -537,17 +694,14 @@
                 ctx.strokeStyle = strokeCol;
                 ctx.fillStyle = fillCol;
 
-                // テキスト整形
                 const yearStr = (label.year === '1') ? '元' : label.year;
                 const line1 = `${label.era}${yearStr}年 ${label.denomination}円`;
                 
-                // 半角の%が含まれていたら全角に変換し、なければ末尾に追加
                 let dispPct = String(label.percentage).replace(/%/g, '％');
                 if (dispPct !== '???' && !dispPct.includes('％')) dispPct += '％';
                 const line2 = `（${dispPct}）`;
                 const rarityText = label.rarity;
 
-                // テキスト描画関数（フチ＆発光 → 塗りつぶし）
                 const drawText = (text, x, y, fSize) => {
                     ctx.font = `${fSize}px "Dela Gothic One", sans-serif`;
                     ctx.lineWidth = fSize * strokeRatio;
@@ -560,7 +714,6 @@
                     ctx.fillText(text, x, y);
                 };
 
-                // 各テキストの幅を計測して全体のレイアウトを決定
                 ctx.font = `${fontSizeRarity}px "Dela Gothic One", sans-serif`;
                 const rarityWidth = ctx.measureText(rarityText).width;
                 
@@ -572,13 +725,10 @@
                 const margin = fontSizeMain * 0.4;
                 const totalWidth = rarityWidth + margin + rightTextWidth;
                 
-                // 全体の中央が label.x になるように開始位置を調整
                 const startX = label.x - (totalWidth / 2);
                 
-                // 1. レアリティの描画（左側）
                 drawText(rarityText, startX, label.y, fontSizeRarity);
                 
-                // 2. 年号・額面と確率の描画（右側に上下2行）
                 const rightX = startX + rarityWidth + margin;
                 const yOffset = fontSizeMain * 0.65;
                 
@@ -629,7 +779,6 @@
                 const blob = await createCanvasBlob(0.95);
                 const file = new File([blob], `otsuri_gacha_${Date.now()}.jpg`, { type: 'image/jpeg' });
 
-                // スマホや対応ブラウザなら共有シート経由で画像＋ハッシュタグを渡す
                 if (navigator.canShare && navigator.canShare({ files: [file] })) {
                     await navigator.share({
                         files: [file],
@@ -639,14 +788,12 @@
                     return;
                 }
             } catch (err) {
-                // ユーザーが共有シートを閉じた場合（AbortError）はそのまま終了
                 if (err && err.name === 'AbortError') {
                     return;
                 }
                 console.warn('Web Share API fallback:', err);
             }
 
-            // 非対応環境・PCなどの場合は画像を保存しつつX投稿画面を開く
             downloadImage();
             window.open(intentUrl, '_blank', 'noopener,noreferrer');
             showToast("X投稿画面を開きました（画像を添付してください）");
