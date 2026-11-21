@@ -1,0 +1,1 @@
+# otsuri-gacha-img
