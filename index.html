@@ -107,25 +107,8 @@
                         </select>
                     </div>
 
-                    <!-- レアリティ・確率 (CSV連動) -->
-                    <div class="flex gap-2 pt-1 border-t border-gray-200 mt-2">
-                        <div class="w-1/3">
-                            <label class="block text-xs font-bold text-gray-600 mb-1">レア度</label>
-                            <select id="labelRarity" disabled class="w-full px-2.5 py-2 border border-gray-300 rounded-lg text-sm font-bold bg-gray-100 text-gray-700">
-                                <option value="N">N</option>
-                                <option value="R">R</option>
-                                <option value="SR">SR</option>
-                                <option value="SSR">SSR</option>
-                            </select>
-                        </div>
-                        <div class="flex-1">
-                            <label class="block text-xs font-bold text-gray-600 mb-1">確率 (%)</label>
-                            <input type="text" id="labelProb" placeholder="年・額面を選択すると自動入力" readonly class="w-full px-2.5 py-2 border border-gray-300 rounded-lg text-sm bg-gray-100 text-gray-700">
-                        </div>
-                    </div>
-
                     <!-- 文字サイズ -->
-                    <div class="pt-1">
+                    <div class="pt-1 border-t border-gray-200 mt-2">
                         <div class="flex justify-between items-center mb-1">
                             <label class="block text-xs font-bold text-gray-600">文字サイズ</label>
                             <span id="fontSizeDisplay" class="text-xs font-mono bg-gray-200 px-2 py-0.5 rounded">30</span>
@@ -194,6 +177,8 @@
         let baseImage = null;
         let coinData = [];
         let labels = [];
+        let currentRarity = 'N';
+        let currentProb = '';
         
         // Label dragging state
         let isDraggingLabel = false;
@@ -231,8 +216,6 @@
         const denomInput = document.getElementById('labelDenomination');
         const typeSelectorGroup = document.getElementById('typeSelectorGroup');
         const typeInput = document.getElementById('labelCoinType');
-        const rarityInput = document.getElementById('labelRarity');
-        const probInput = document.getElementById('labelProb');
         const fontSizeInput = document.getElementById('labelFontSize');
         const fontSizeDisplay = document.getElementById('fontSizeDisplay');
         
@@ -262,15 +245,15 @@
                 if (baseImage) fitCanvasToViewport();
             });
 
-            // Form Event Listeners (Sync CSV -> Form)
+            // Form Event Listeners (Sync CSV -> State)
             const syncFormInputs = () => {
                 checkTypeSelectorVisibility();
-                autofillFromCSV();
+                syncCoinMetaFromCSV();
             };
             eraInput.addEventListener('change', syncFormInputs);
             yearInput.addEventListener('input', syncFormInputs);
             denomInput.addEventListener('change', syncFormInputs);
-            typeInput.addEventListener('change', autofillFromCSV);
+            typeInput.addEventListener('change', syncCoinMetaFromCSV);
             
             // Slider value display update
             fontSizeInput.addEventListener('input', (e) => {
@@ -288,7 +271,7 @@
         function fitCanvasToViewport() {
             if (!baseImage) return;
             const rect = viewport.getBoundingClientRect();
-            const padding = 16; // 余白
+            const padding = 16;
             const availW = Math.max(rect.width - padding * 2, 50);
             const availH = Math.max(rect.height - padding * 2, 50);
 
@@ -298,13 +281,11 @@
             minScale = viewScale * 0.5;
             maxScale = Math.max(viewScale * 6, 3.0);
 
-            // 中央配置
             viewX = (rect.width - canvas.width * viewScale) / 2;
             viewY = (rect.height - canvas.height * viewScale) / 2;
             applyViewportTransform();
         }
 
-        // 画面(clientX, clientY)座標をCanvas内部ピクセル座標へ変換
         function clientToCanvasPos(clientX, clientY) {
             const rect = viewport.getBoundingClientRect();
             const vx = clientX - rect.left;
@@ -376,31 +357,36 @@
             }
         }
 
-        function autofillFromCSV() {
-            if (coinData.length === 0) return;
-            
+        function findCoinMatch() {
+            if (coinData.length === 0) return null;
+
             const era = eraInput.value;
-            const rawYear = yearInput.value;
-            const normYear = normalizeYear(rawYear);
+            const normYear = normalizeYear(yearInput.value);
             const denom = denomInput.value;
             const type = typeInput.value;
 
-            if (!normYear) return;
+            if (!normYear) return null;
 
             let searchYear = normYear;
             if (era === '令和' && searchYear === '3' && denom === '500') {
                 if (type === 'bicolor') searchYear = '3（バイカラー）';
             }
 
-            const match = coinData.find(d => 
-                d.era === era && 
-                String(d.year) === String(searchYear) && 
+            return coinData.find(d =>
+                d.era === era &&
+                String(d.year) === String(searchYear) &&
                 String(d.denomination) === String(denom)
-            );
+            ) || null;
+        }
 
+        function syncCoinMetaFromCSV() {
+            const match = findCoinMatch();
             if (match) {
-                probInput.value = match.percentage;
-                rarityInput.value = match.rarity;
+                currentProb = match.percentage;
+                currentRarity = match.rarity;
+            } else {
+                currentProb = '';
+                currentRarity = 'N';
             }
         }
 
@@ -432,7 +418,6 @@
                     document.getElementById('instructionText').style.display = 'none';
                     labels = [];
                     drawCanvas();
-                    // レイアウト確定後に画面へフィット
                     requestAnimationFrame(() => fitCanvasToViewport());
                 }
                 img.src = event.target.result;
@@ -440,7 +425,6 @@
             reader.readAsDataURL(file);
         }
 
-        // ラベルの当たり判定
         function getLabelHitbox(label) {
             const scaleBase = canvas.width / 1000;
             const fontSizeMain = scaleBase * label.fontSize;
@@ -471,7 +455,6 @@
             viewport.setPointerCapture(e.pointerId);
             activePointers.set(e.pointerId, e);
 
-            // 2本指タッチになった場合はピンチズーム開始
             if (activePointers.size === 2) {
                 isDraggingLabel = false;
                 isPanningCanvas = false;
@@ -483,14 +466,12 @@
                 return;
             }
 
-            // 1本指 / マウスクリック時
             if (activePointers.size === 1) {
                 const pos = clientToCanvasPos(e.clientX, e.clientY);
                 const now = Date.now();
                 const isDoubleTap = (now - lastTapTime) < 300;
                 lastTapTime = now;
 
-                // ラベルのヒットテスト（前面から）
                 draggingLabelIndex = -1;
                 for (let i = labels.length - 1; i >= 0; i--) {
                     const box = getLabelHitbox(labels[i]);
@@ -503,18 +484,15 @@
 
                 if (draggingLabelIndex !== -1) {
                     if (isDoubleTap) {
-                        // ダブルタップでラベル削除
                         labels.splice(draggingLabelIndex, 1);
                         draggingLabelIndex = -1;
                         drawCanvas();
                     } else {
-                        // ラベルのドラッグ移動開始
                         isDraggingLabel = true;
                         dragOffsetX = pos.x - labels[draggingLabelIndex].x;
                         dragOffsetY = pos.y - labels[draggingLabelIndex].y;
                     }
                 } else {
-                    // ラベル以外を触った場合はキャンバス全体の移動（パン）開始
                     isPanningCanvas = true;
                     lastPanX = e.clientX;
                     lastPanY = e.clientY;
@@ -526,7 +504,6 @@
             if (!baseImage || !activePointers.has(e.pointerId)) return;
             activePointers.set(e.pointerId, e);
 
-            // 2本指ピンチズーム＋移動
             if (activePointers.size === 2) {
                 const pts = Array.from(activePointers.values());
                 const currentDist = getPinchDistance(pts[0], pts[1]);
@@ -545,7 +522,6 @@
                 return;
             }
 
-            // 1本指でのラベル移動
             if (isDraggingLabel && draggingLabelIndex !== -1) {
                 const pos = clientToCanvasPos(e.clientX, e.clientY);
                 labels[draggingLabelIndex].x = pos.x - dragOffsetX;
@@ -554,7 +530,6 @@
                 return;
             }
 
-            // 1本指でのキャンバス全体移動
             if (isPanningCanvas) {
                 const dx = e.clientX - lastPanX;
                 const dy = e.clientY - lastPanY;
@@ -579,7 +554,6 @@
                 isDraggingLabel = false;
                 isPanningCanvas = false;
             } else if (activePointers.size === 1) {
-                // 2本指から1本指に戻ったときはパン基準点を更新
                 const remaining = Array.from(activePointers.values())[0];
                 isPanningCanvas = true;
                 lastPanX = remaining.clientX;
@@ -587,7 +561,6 @@
             }
         }
 
-        // PCマウスホイールでの拡大縮小
         function handleWheel(e) {
             if (!baseImage) return;
             e.preventDefault();
@@ -619,10 +592,9 @@
                 return;
             }
 
-            let pValue = probInput.value.trim();
-            if (pValue === '') pValue = '???';
+            syncCoinMetaFromCSV();
+            const pValue = currentProb.trim() === '' ? '???' : currentProb.trim();
 
-            // 現在画面に見えている領域の中央に追加する
             const rect = viewport.getBoundingClientRect();
             const centerPos = clientToCanvasPos(rect.left + rect.width / 2, rect.top + rect.height / 2);
             const targetX = Math.min(Math.max(centerPos.x, 50), canvas.width - 50);
@@ -635,7 +607,7 @@
                 year: normYear,
                 denomination: denomInput.value,
                 percentage: pValue,
-                rarity: rarityInput.value,
+                rarity: currentRarity,
                 fontSize: parseInt(fontSizeInput.value, 10)
             };
             
@@ -808,7 +780,7 @@
                 const csvText = await res.text();
                 loadCsvData(csvText);
                 showToast('coins_rarity.csv を自動読み込みしました');
-                autofillFromCSV();
+                syncCoinMetaFromCSV();
             } catch (err) {
                 console.warn('coins_rarity.csv の自動読み込みに失敗しました:', err);
                 showToast('CSVの読み込みに失敗しました', false);
