@@ -138,9 +138,9 @@
                     <div class="pt-2">
                         <div class="flex justify-between items-center mb-1">
                             <label class="block text-xs font-bold text-gray-600">文字サイズ</label>
-                            <span id="fontSizeDisplay" class="text-xs font-mono bg-gray-200 px-2 py-0.5 rounded">60</span>
+                            <span id="fontSizeDisplay" class="text-xs font-mono bg-gray-200 px-2 py-0.5 rounded">30</span>
                         </div>
-                        <input type="range" id="labelFontSize" min="20" max="150" value="60" class="w-full">
+                        <input type="range" id="labelFontSize" min="20" max="60" value="30" class="w-full">
                     </div>
 
                     <button id="addLabelBtn" class="w-full mt-2 bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg text-sm font-bold shadow-md transition-transform active:scale-95 flex items-center justify-center gap-2">
@@ -1026,9 +1026,28 @@
             }
         }
 
+        async function loadDefaultCsvFromFile() {
+        try {
+            // キャッシュを確実に最新にしたい場合は cache: 'no-store' を指定
+            const res = await fetch('./coins_rarity.csv', { cache: 'no-store' });
+            if (!res.ok) {
+                throw new Error(`HTTP ${res.status}`);
+            }
+            const csvText = await res.text();
+            loadCsvData(csvText);
+            showToast('coins_rarity.csv を自動読み込みしました');
+            autofillFromCSV();
+        } catch (err) {
+            console.warn('coins_rarity.csv の自動読み込みに失敗したため内蔵データを使用します:', err);
+            // loadCsvData(DEFAULT_CSV_DATA);
+            // autofillFromCSV();
+        }
+    }
+
         // Run
-        loadCsvData(DEFAULT_CSV_DATA); // デフォルトはHTML内蔵CSVを使用
+        // loadCsvData(DEFAULT_CSV_DATA); // デフォルトはHTML内蔵CSVを使用
         init();
+        loadDefaultCsvFromFile();
         document.fonts.ready.then(() => { if (baseImage) drawCanvas(); });
 
     </script>
